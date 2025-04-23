@@ -54,7 +54,3 @@ Use GROUP BY and COUNT() to find out which game genre is the most popular among 
 Task 5: Recently Joined Players  
 
 Write a query to find all players who joined in the last 30 days. Use the WHERE clause to filter by the `join_date`. 
-
-Bonus Task: Players' Favorite Games  
-
-Use JOIN and GROUP BY to find out which game each player has played the most times. Show the player’s name and the game title.
