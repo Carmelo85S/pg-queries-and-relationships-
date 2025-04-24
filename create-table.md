@@ -1,3 +1,8 @@
+```sql
+
+Create table Players, Games, Scores
+
+
 CREATE TABLE Players (
     id INTEGER PRIMARY KEY,
     name VARCHAR(255),
@@ -5,29 +10,31 @@ CREATE TABLE Players (
 );
 
 CREATE TABLE Games (
-	id INTEGER PRIMARY KEY,
-	title VARCHAR (100),
-	genre VARCHAR (100)
+    id INTEGER PRIMARY KEY,
+    title VARCHAR(100),
+    genre VARCHAR(100)
 );
 
-CREATE TABLE Scores(
-	id INTEGER PRIMARY KEY,
-	player_id INT NOT NULL,
+CREATE TABLE Scores (
+    id INTEGER PRIMARY KEY,
+    player_id INT NOT NULL,
     game_id INT NOT NULL,
     score INT NOT NULL,
     date_played DATE NOT NULL,
-	FOREIGN KEY (player_id) REFERENCES Players(id),
-	FOREIGN KEY (game_id) REFERENCES Games(id)
+    FOREIGN KEY (player_id) REFERENCES Players(id),
+    FOREIGN KEY (game_id) REFERENCES Games(id)
 );
 
+
 Insert data into tables
+
 
 INSERT INTO Players (id, name, join_date) VALUES 
 (1, 'Carmelo', '2025-04-22'),
 (2, 'Vittorio', '2021-03-12'),
 (3, 'Angelica', '2023-04-18'),
 (4, 'Isabella', '2021-03-31'),
-(5, 'Alexander', '2023-02-02');
+(5, 'Alexander', '2023-02-02'),
 (6, 'Joe', '2025-04-22');
 
 INSERT INTO Games (id, title, genre) VALUES
@@ -36,7 +43,6 @@ INSERT INTO Games (id, title, genre) VALUES
 (3, 'Tokio Drift', 'Racing'),
 (4, 'Puzzle Puzzly no way', 'Puzzle'),
 (5, 'Battle Royal 5.0', 'Action');
-
 
 INSERT INTO Scores (id, player_id, game_id, score, date_played) VALUES
 (1, 1, 1, 4200, '2025-04-21'),
@@ -51,17 +57,15 @@ INSERT INTO Scores (id, player_id, game_id, score, date_played) VALUES
 (10, 5, 1, 5200, '2023-03-01');
 
 
-
-Task 1: List All Players and Their Scores  
-
-Write a query that uses an INNER JOIN to display all players along with the games they have played and their scores. Include the player’s name, game title, and score. 
+List all players and their scores
 
 SELECT Players.name, Games.title, Scores.score
 FROM Scores
 INNER JOIN Players ON Scores.player_id = Players.id
 INNER JOIN Games ON Scores.game_id = Games.id;
 
-Task 2: Use GROUP BY and ORDER BY to find the top 3 players with the highest total scores across all games. 
+
+Top 3 Players by Total Score
 
 SELECT Players.name,
 SUM(Scores.score) AS total_score
@@ -71,15 +75,15 @@ GROUP BY Players.name
 ORDER BY total_score DESC
 LIMIT 3;
 
-Task 3: Use a LEFT OUTER JOIN  to list all players who haven’t played any games yet. 
+Players who have not played any game
 
 SELECT Players.name
 FROM Players
 LEFT OUTER JOIN Scores ON Players.id = Scores.player_id
 WHERE Scores.id IS NULL;
 
-Task 4: Find Popular Game Genres  
-Use GROUP BY and COUNT() to find out which game genre is the most popular among players. 
+
+Most popular game
 
 SELECT Games.genre, COUNT(Scores.id) AS games_played
 FROM Scores
@@ -88,7 +92,8 @@ GROUP BY Games.genre
 ORDER BY games_played DESC
 LIMIT 1;
 
-Task 5: Write a query to find all players who joined in the last 30 days. Use the WHERE clause to filter by the `join_date`. 
+
+Player who joined in the last 30 days
 
 SELECT Players.name, Players.join_date
 FROM Players
